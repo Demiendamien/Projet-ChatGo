@@ -11,6 +11,13 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const DB_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/chatGo';
 
+const authRoutes = require('./routes/auth');
+
+app.use('/api/auth', authRoutes);
+
+const protectedRoutes = require('./routes/protectedRoutes');
+app.use('/api', protectedRoutes);
+
 // Connexion à la base de données
 mongoose.connect(DB_URI)
   .then(() => console.log('✅ Connexion à MongoDB réussie !'))
